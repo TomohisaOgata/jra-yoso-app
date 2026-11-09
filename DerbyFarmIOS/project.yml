@@ -1,0 +1,19 @@
+name: DerbyFarm
+options:
+  bundleIdPrefix: com.derbyfarm
+  deploymentTarget:
+    iOS: "17.0"
+targets:
+  DerbyFarm:
+    type: application
+    platform: iOS
+    sources:
+      - path: DerbyFarmApp.swift
+      - path: ContentView.swift
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.derbyfarm.game
+        SWIFT_VERSION: "5.0"
+        GENERATE_INFOPLIST_FILE: YES
+        TARGETED_DEVICE_FAMILY: "1,2"
+        CODE_SIGNING_ALLOWED: NO
