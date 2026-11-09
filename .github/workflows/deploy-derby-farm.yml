@@ -4,6 +4,7 @@ on:
     branches: [main]
     paths:
       - 'docs/**'
+      - 'index.html'
       - '.github/workflows/deploy-derby-farm.yml'
   workflow_dispatch:
 permissions:
