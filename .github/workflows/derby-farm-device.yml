@@ -1,0 +1,37 @@
+name: Derby Farm iPhone device build
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'DerbyFarmIOS/**'
+      - '.github/workflows/derby-farm-device.yml'
+jobs:
+  iphoneos:
+    runs-on: macos-15
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install XcodeGen
+        run: brew install xcodegen
+      - name: Generate Xcode project
+        working-directory: DerbyFarmIOS
+        run: xcodegen generate
+      - name: Build for physical iPhone (unsigned)
+        working-directory: DerbyFarmIOS
+        run: |
+          set -euo pipefail
+          xcodebuild -project DerbyFarm.xcodeproj -scheme DerbyFarm -configuration Release -sdk iphoneos -destination 'generic/platform=iOS' -derivedDataPath build CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO build
+      - name: Package unsigned device IPA
+        working-directory: DerbyFarmIOS
+        run: |
+          set -euo pipefail
+          mkdir -p dist/Payload
+          cp -R build/Build/Products/Release-iphoneos/DerbyFarm.app dist/Payload/
+          cd dist
+          zip -qr DerbyFarm-unsigned-iphoneos.ipa Payload
+      - name: Upload unsigned iPhone build
+        uses: actions/upload-artifact@v4
+        with:
+          name: DerbyFarm-unsigned-iPhone-IPA
+          path: DerbyFarmIOS/dist/DerbyFarm-unsigned-iphoneos.ipa
+          if-no-files-found: error
