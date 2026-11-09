@@ -1,4 +1,4 @@
-<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>JRA予想ラボ</title><style>body{margin:0;background:#eef3f4;color:#18303d;font:16px -apple-system,BlinkMacSystemFont,sans-serif}header{background:#143443;color:white;padding:22px}main{max-width:700px;margin:auto;padding:14px}section{background:white;padding:16px;margin:12px 0;border-radius:12px}h1{font-size:23px;margin:0}h2{font-size:18px;margin:0 0 12px}label{display:block;margin:10px 0 4px;font-size:13px}input,select,textarea{width:100%;box-sizing:border-box;border:1px solid #b8c9d0;border-radius:8px;padding:10px;font:inherit}textarea{height:170px;font-size:13px}button{background:#08766c;color:white;border:0;border-radius:9px;padding:13px 18px;font-weight:bold;font-size:16px;margin:10px 5px 5px 0}.grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}.hint{font-size:13px;color:#526d78;line-height:1.6}.warn{background:#fff2d8;padding:10px;border-radius:8px}.horse{padding:10px;border-bottom:1px solid #ddd}.mark{color:#b45118;font-weight:bold}#status{color:#08766c;font-size:14px}a{color:#08766c}</style></head><body><header><h1>🏇 JRA予想ラボ</h1><small>中央競馬専用・試作版 v0.5</small></header><main><section><h2>レース設定</h2><div class="grid"><div><label>開催日</label><input type="date" id="date"></div><div><label>競馬場</label><select id="course"><option>東京</option><option>中山</option><option>京都</option><option>阪神</option><option>中京</option><option>新潟</option><option>福島</option><option>小倉</option><option>札幌</option><option>函館</option></select></div><div><label>レース</label><select id="race"></select></div><div><label>馬場</label><select id="going"><option>良</option><option>稍重</option><option>重</option><option>不良</option></select></div><div><label>コース</label><select id="surface"><option>ダート</option><option>芝</option></select></div><div><label>距離（m）</label><input type="number" id="distance" value="1800"></div></div></section><section><h2>出走馬を入力</h2><p class="hint warn">以下は架空のテストデータです。JRAの出走表・オッズはまだ自動取得できません。</p><p class="hint">1行ずつ「馬番,馬名,単勝オッズ,脚質,父,斤量,近走評価(0〜100)」を入力してください。脚質は逃げ・先行・差し・追込。</p><textarea id="horses">1,サンプルA,4.2,先行,シニスターミニスター,57,76
+<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>JRA予想ラボ</title><style>body{margin:0;background:#eef3f4;color:#18303d;font:16px -apple-system,BlinkMacSystemFont,sans-serif}header{background:#143443;color:white;padding:22px}main{max-width:700px;margin:auto;padding:14px}section{background:white;padding:16px;margin:12px 0;border-radius:12px}h1{font-size:23px;margin:0}h2{font-size:18px;margin:0 0 12px}label{display:block;margin:10px 0 4px;font-size:13px}input,select,textarea{width:100%;box-sizing:border-box;border:1px solid #b8c9d0;border-radius:8px;padding:10px;font:inherit}textarea{height:170px;font-size:13px}button{background:#08766c;color:white;border:0;border-radius:9px;padding:13px 18px;font-weight:bold;font-size:16px;margin:10px 5px 5px 0}.grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}.hint{font-size:13px;color:#526d78;line-height:1.6}.warn{background:#fff2d8;padding:10px;border-radius:8px}.horse{padding:10px;border-bottom:1px solid #ddd}.mark{color:#b45118;font-weight:bold}#status{color:#08766c;font-size:14px}a{color:#08766c}</style></head><body><header><h1>🏇 JRA予想ラボ</h1><small>中央競馬専用・試作版 v0.6</small></header><main><section><h2>レース設定</h2><div class="grid"><div><label>開催日</label><input type="date" id="date"></div><div><label>競馬場</label><select id="course"><option>東京</option><option>中山</option><option>京都</option><option>阪神</option><option>中京</option><option>新潟</option><option>福島</option><option>小倉</option><option>札幌</option><option>函館</option></select></div><div><label>レース</label><select id="race"></select></div><div><label>馬場</label><select id="going"><option>良</option><option>稍重</option><option>重</option><option>不良</option></select></div><div><label>コース</label><select id="surface"><option>ダート</option><option>芝</option></select></div><div><label>距離（m）</label><input type="number" id="distance" value="1800"></div></div></section><section><h2>出走馬を入力</h2><p class="hint warn">以下は架空のテストデータです。JRAの出走表・オッズはまだ自動取得できません。</p><p class="hint">1行ずつ「馬番,馬名,単勝オッズ,脚質,父,斤量,近走評価(0〜100)」を入力してください。脚質は逃げ・先行・差し・追込。</p><div style="border:1px solid #d2e1e4;border-radius:10px;padding:12px;margin:12px 0;background:#f7fbfc"><strong>出走馬データの一括取り込み（新機能）</strong><p class="hint">7項目のCSVまたはタブ区切りを貼り付けられます。見出し行があっても取り込めます。公式サイトの文章をそのまま自動解析する機能ではありません。</p><label for="bulk">馬番,馬名,単勝オッズ,脚質,父,斤量,近走評価</label><textarea id="bulk" placeholder="1,馬名A,4.2,先行,シニスターミニスター,57,75&#10;2,馬名B,8.0,差し,キズナ,56,68" style="height:110px"></textarea><button type="button" id="importBulk">貼り付けデータを取り込む</button><label for="csvFile">またはCSV・テキストファイルを選択</label><input type="file" id="csvFile" accept=".csv,.txt,text/csv,text/plain"><p id="importStatus" class="hint" role="status">※取り込み後、「予想を分析する」を押してください。</p></div><textarea id="horses">1,サンプルA,4.2,先行,シニスターミニスター,57,76
 2,サンプルB,7.8,差し,キズナ,57,80
 3,サンプルC,12.5,逃げ,ヘニーヒューズ,56,68
 4,サンプルD,3.1,追込,ドゥラメンテ,58,82
@@ -52,5 +52,31 @@
   el("save").addEventListener("click",function(){try{var items=JSON.parse(localStorage.getItem("jra-history")||"[]");items.unshift(el("date").value+" "+el("course").value+el("race").value+"R "+latest);localStorage.setItem("jra-history",JSON.stringify(items.slice(0,20)));showHistory();message("保存しました");}catch(error){message("保存できませんでした");}});
   showHistory();
   message("計算機能の読み込み完了・v0.5");
+})();
+</script><script>
+(function(){
+"use strict";
+var bulk=document.getElementById("bulk"),target=document.getElementById("horses"),status=document.getElementById("importStatus");
+function parse(raw){
+var rows=raw.replace(/^\uFEFF/,"").split(/\r?\n/).map(function(x){return x.trim();}).filter(Boolean);
+if(!rows.length)throw new Error("データを貼り付けてください");
+var parsed=[],used={};
+rows.forEach(function(line,index){
+var cols=line.indexOf("\t")>=0?line.split("\t"):line.split(",");
+cols=cols.map(function(x){return x.trim().replace(/^"|"$/g,"");});
+if(index===0 && (cols[0]==="馬番"||cols[0].toLowerCase()==="number"))return;
+if(cols.length!==7)throw new Error((index+1)+"行目：7項目が必要です。区切りはカンマまたはタブを使用してください");
+var n=Number(cols[0]),odds=Number(cols[2]),weight=Number(cols[5]),form=Number(cols[6]);
+if(!Number.isInteger(n)||n<1||n>18||used[n])throw new Error((index+1)+"行目：馬番が不正または重複しています");
+used[n]=true;
+if(!cols[1]||!["逃げ","先行","差し","追込"].includes(cols[3])||!cols[2]||!Number.isFinite(odds)||odds<=1||!cols[5]||!Number.isFinite(weight)||weight<45||weight>65||!cols[6]||!Number.isFinite(form)||form<0||form>100)throw new Error((index+1)+"行目：馬名・オッズ・脚質・斤量・近走評価を確認してください");
+parsed.push(cols.join(","));
+});
+if(parsed.length<2)throw new Error("少なくとも2頭のデータが必要です");
+return parsed;
+}
+function importText(raw){try{var rows=parse(raw);target.value=rows.join("\n");status.textContent=rows.length+"頭を取り込みました。下の「予想を分析する」を押してください。";}catch(e){status.textContent="取り込みエラー："+e.message;}}
+document.getElementById("importBulk").addEventListener("click",function(){importText(bulk.value);});
+document.getElementById("csvFile").addEventListener("change",function(event){var file=event.target.files&&event.target.files[0];if(!file)return;if(file.size>1024*1024){status.textContent="ファイルは1MB以下にしてください";return;}var reader=new FileReader();reader.onload=function(){bulk.value=String(reader.result||"");importText(bulk.value);};reader.onerror=function(){status.textContent="ファイルを読み込めませんでした";};reader.readAsText(file,"UTF-8");});
 })();
 </script></body></html>
