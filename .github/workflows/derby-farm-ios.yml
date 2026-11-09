@@ -1,0 +1,27 @@
+name: Derby Farm iOS build check
+on:
+  push:
+    paths:
+      - 'DerbyFarmIOS/**'
+      - '.github/workflows/derby-farm-ios.yml'
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install XcodeGen
+        run: brew install xcodegen
+      - name: Generate Xcode project
+        working-directory: DerbyFarmIOS
+        run: xcodegen generate
+      - name: Build for iOS Simulator (unsigned)
+        working-directory: DerbyFarmIOS
+        run: |
+          xcodebuild -project DerbyFarm.xcodeproj -scheme DerbyFarm -configuration Debug -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' -derivedDataPath build CODE_SIGNING_ALLOWED=NO build
+      - name: Upload simulator app for inspection
+        uses: actions/upload-artifact@v4
+        with:
+          name: DerbyFarm-iOS-Simulator-unsigned
+          path: DerbyFarmIOS/build/Build/Products/Debug-iphonesimulator/DerbyFarm.app
+          if-no-files-found: error
